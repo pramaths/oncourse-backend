@@ -1,0 +1,35 @@
+{
+  "name": "seniorAiDiagnosisEvaluator",
+  "description": "This tool simulates a senior medical advisor's role by analyzing diverse patient data and mentoring NEET PG students in making informed diagnostic decisions. It provides diagnostic suggestions with confidence scores in a conversational format, tailored to enhance student understanding and learning. Always output should be string return score as well out of 5",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "patient_data": {
+        "type": "object",
+        "description": "Comprehensive data set of the patient, including symptoms, medical history, and other relevant details.",
+        "properties": {
+          "symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of symptoms as described by the patient, which may include general discomforts or specific medical signs."
+          },
+          "medical_history": {
+            "type": "string",
+            "description": "A detailed summary of the patient's past and present medical conditions and treatments."
+          },
+          "score": {
+            "type": "number",
+            "description": "The confidence score of the diagnostic suggestion, ranging from 0 to 5."
+        }
+        }
+      },
+      "database_call": {
+        "type": "boolean",
+        "description": "Indicates whether the system should retrieve additional patient data from a database when necessary information is absent in the initial input."
+      }
+    },
+    "required": ["patient_data"]
+  }
+}

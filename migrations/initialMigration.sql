@@ -1,0 +1,44 @@
+-- User Table
+CREATE TABLE IF NOT EXISTS "Users" (
+    email VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Patient Table
+CREATE TABLE IF NOT EXISTS "Patients" (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    history TEXT,
+    symptoms TEXT NOT NULL,
+    additional_info TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Conversation Table
+CREATE TABLE IF NOT EXISTS "Conversations" (
+    id SERIAL PRIMARY KEY,
+    conversation JSON[] NOT NULL,
+    total_score FLOAT NOT NULL DEFAULT 0,
+    max_total_score FLOAT DEFAULT 10,
+    email VARCHAR(255) NOT NULL REFERENCES "Users"(email) ON DELETE CASCADE,
+    patient_id INT NOT NULL REFERENCES "Patients"(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Score Table
+CREATE TABLE IF NOT EXISTS "Scores" (
+    id SERIAL PRIMARY KEY,
+    step VARCHAR(255) NOT NULL,
+    score FLOAT NOT NULL,
+    max_score FLOAT NOT NULL,
+    user_email VARCHAR(255) NOT NULL REFERENCES "Users"(email) ON DELETE CASCADE,
+    conversation_id INT NOT NULL REFERENCES "Conversations"(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

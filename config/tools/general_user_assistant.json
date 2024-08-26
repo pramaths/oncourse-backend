@@ -1,0 +1,15 @@
+{
+    "name": "general_user_assistant",
+    "description": "This tool provides general assistance to the user, offering help with navigating the AI, understanding how to ask questions, or clarifying any doubts.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "user_query": {
+          "type": "string",
+          "description": "The user's text input that requests general assistance, help with using the AI tool, or any other non-medical query."
+        }
+      },
+      "required": ["user_query"]
+    }
+  }
+  

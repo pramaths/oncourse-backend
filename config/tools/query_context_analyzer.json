@@ -1,0 +1,14 @@
+{
+  "name": "query_context_analyzer",
+  "description": "This tool analyzes the user's text input to determine whether the query pertains to medical tests, diagnosis, or other contexts. It utilizes the provided text to accurately classify the nature of the inquiry.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "query_text": {
+        "type": "string",
+        "description": "The text input from the user that needs to be assessed to ascertain whether the inquiry relates to a medical test, diagnosis, or falls within a different context."
+      }
+    },
+    "required": ["query_text"]
+  }
+}
