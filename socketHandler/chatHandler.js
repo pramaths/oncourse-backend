@@ -26,8 +26,6 @@ const chatHandler = (io, socket, patientId, userEmail, initialMessage) => {
   
 
   const handleGPTResponse = async (response, conversation) => {
-    console.log("Response from OpenAI:", JSON.stringify(response));
-    console.log("essages:", JSON.stringify(response.choices[0]))
     if (response.function_call) {
       const functionCall = response.message.function_call;
       const functionName = functionCall.name;
