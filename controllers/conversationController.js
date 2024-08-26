@@ -4,22 +4,14 @@ const createOrUpdateConversation = async (conversationData) => {
     try {
       const { conversation, totalScore, maxTotalScore, userEmail, patientId } = conversationData;
   
-      const processedConversationArray = conversation.map((msg) =>
-        msg.content.replace(/\\/g, '') 
-           .replace(/\//g, '') 
-           .replace(/\n/g, '') 
-      );
-      
-  
       const result = await db.query(
         `SELECT * FROM "Conversations" WHERE email = $1 AND patient_id = $2`,
         [userEmail, patientId]
       );
   
       let existingConversation = result.rows[0];
-  
       if (existingConversation) {
-        const updatedConversationArray = [...existingConversation.conversation, ...processedConversationArray];
+        const updatedConversationArray = [...existingConversation.conversation, ...conversation];
   
         const updatedConversation = await db.query(
           `UPDATE "Conversations" 
@@ -39,7 +31,7 @@ const createOrUpdateConversation = async (conversationData) => {
           `INSERT INTO "Conversations" (conversation, total_score, max_total_score, email, patient_id, created_at, updated_at)
            VALUES ($1, $2, $3, $4, $5, NOW(), NOW()) 
            RETURNING *`,
-          [processedConversationArray, totalScore, maxTotalScore, userEmail, patientId]
+          [conversation, totalScore, maxTotalScore, userEmail, patientId]
         );
   
         return { status: 201, data: newConversation.rows[0] };
